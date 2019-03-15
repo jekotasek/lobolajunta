@@ -1,0 +1,19 @@
+{
+  "name": "lajunta",
+  "version": "1.0.0",
+  "description": "POS system for La Junta",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jekotasek/lobolajunta.git"
+  },
+  "author": "Escuadron Lobo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jekotasek/lobolajunta/issues"
+  },
+  "homepage": "https://github.com/jekotasek/lobolajunta#readme"
+}
