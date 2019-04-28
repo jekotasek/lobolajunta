@@ -27,14 +27,14 @@ module.exports = app => {
       setInterval(function () {
         connection.query('SELECT 1');
       }, 5000);
-      res.render('pages/dashboard', {
+      res.render('pages/products', {
         products: result
       });
     });
   });
 
   app.get('/', (req,res) => {
-    res.render('pages/dashboard')
+    res.redirect('/products')
   });
 
   app.post('/products', (req,res) => {
