@@ -1,4 +1,5 @@
 const dbConnection = require('../../config/dbConnection');
+
 let mailer = require('../js/mailer');
 
 let sqlupdate = 'UPDATE products SET status = ? WHERE id_products = ?';
@@ -23,18 +24,20 @@ module.exports = app => {
   handleDisconnect();
   
   app.get('/products', (req,res) => {
-    connection.query('SELECT * FROM products', (err, result) => {
+    connection.query('SELECT * FROM products;SELECT * FROM promos', (err, result) => {
       setInterval(function () {
         connection.query('SELECT 1');
       }, 5000);
       res.render('pages/products', {
-        products: result
+        products: result[0],
+        promos: result[1]
       });
     });
+
   });
 
   app.get('/', (req,res) => {
-    res.redirect('/products')
+    res.redirect('/products');
   });
 
   app.post('/products', (req,res) => {
@@ -43,6 +46,18 @@ module.exports = app => {
     connection.query('INSERT INTO products SET?', {
       name,
       price,
+      description
+    }, (err, result) => {
+      res.redirect('/products');
+    });
+  });
+
+  app.post('/promos', (req,res) => {
+    const { name, vig, description} = req.body;
+    
+    connection.query('INSERT INTO promos SET?', {
+      name,
+      vig,
       description
     }, (err, result) => {
       res.redirect('/products');
