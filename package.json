@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "build-css": "node-sass --include-path scss src/app/views/scss/main.scss src/config/public/css/main.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,21 @@
   "bugs": {
     "url": "https://github.com/jekotasek/lobolajunta/issues"
   },
-  "homepage": "https://github.com/jekotasek/lobolajunta#readme"
+  "homepage": "https://github.com/jekotasek/lobolajunta#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "css-minify": "^1.0.1",
+    "datatables.net": "^1.10.19",
+    "datatables.net-dt": "^1.10.19",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "jquery": "^3.3.1",
+    "mysql": "^2.16.0",
+    "nodemailer": "^4.7.0",
+    "sass": "^1.14.3"
+  },
+  "devDependencies": {
+    "node-sass": "^4.9.4",
+    "nodemon": "^1.18.5"
+  }
 }
