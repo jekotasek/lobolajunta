@@ -18,22 +18,18 @@
 </head>
 <body>
   <script src="/js/fb.js" type="text/javascript"></script>
-  <nav class="navbar navbar-dark bg-dark">
-    <a href="#" class="navbar-brand mx-auto">LA JUNTA</a>
-  </nav>
-  <div class="jumbotron text-center">
-      <div class="container">
-          <h1>¡Hola!</h1>
-          <hr>
-          <p>AGREGA - MODIFICA - ELIMINA</p>
-          <hr>
-      </div>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">La Junta</h1>
+      <p class="lead">Manejo de promociones y productos</p>
     </div>
+  </div>
+  <h1 class="text-center">Promociones</h1>
   <div class="container">
     <div class="row">
-      <div class="col-6 col-md-4">
+      <div class="col">
           <form action="/promos" method="POST" class="card-body">
-            <h3 class="card-title">Promos</h3>
+            <h3 class="card-title">Nueva</h3>
                 <div class="form-group">
                     <input id="title" type="text" name="name" class="form-control" placeholder="Nombre">
               </div>
@@ -54,34 +50,49 @@
             <input type="submit" value="Agregar" class="btn btn-primary">
           </form>
       </div>
-      <div class="col-12 col-md-8">
-          <table id="promos" class="table table-striped display">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Promo</th>
-                  <th>Vigencia</th>
-                  <th>Descripción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% for(var i = 0; i < promos.length; i++){ %>
-                  <tr>
-                    <td> <%= promos[i].idpromos %></td>
-                    <td> <%= promos[i].name %></td>
-                    <td> <%= promos[i].vig %></td>
-                    <td> <%= promos[i].description %></td>               
-                  </tr>
-                <% } %>
-              </tbody>
-            </table>
+      <div class="col">
+        <form action="/productsedit" method="POST" class="card-body">
+          <h3 class="card-title">Borrar</h3>
+          <div class="form-group">
+            <input type="text" name="id_products" class="form-control" placeholder="ID de promoción a borrar">
+          </div>
+            <input type="submit" value="Borrar promoción" class="btn btn-danger btn-block" formaction="/promodelete">
+          <hr>
+            <input type="submit" value="Limpiar tabla" class="btn btn-danger btn-block" formaction="/cleartablepromo">
+          <br>
+        </form>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+        <table id="promos" class="table table-striped display">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Promo</th>
+                <th>Vigencia</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i = 0; i < promos.length; i++){ %>
+                <tr>
+                  <td> <%= promos[i].idpromos %></td>
+                  <td> <%= promos[i].name %></td>
+                  <td> <%= promos[i].vig %></td>
+                  <td> <%= promos[i].description %></td>               
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+    </div>
+    </div>
     <hr>
+    <h1 class="text-center">Productos</h1>
     <div class="row">
           <div class="col">
               <form action="/products" method="POST" class="card-body">
-                <h3 class="card-title">Agregar producto</h3>
+                <h3 class="card-title">Nuevo</h3>
                     <div class="form-group">
                         <input id="title" type="text" name="name" class="form-control" placeholder="Nombre">
                   </div>
@@ -97,7 +108,7 @@
           </div>
           <div class="col">
               <form action="/productsedit" method="POST" class="card-body">
-                <h3 class="card-title">Editar productos</h3>
+                <h3 class="card-title">Editar</h3>
                 <div class="form-group">
                   <input type="text" name="id_products" class="form-control" placeholder="ID de producto a editar">
                 </div>
@@ -123,6 +134,7 @@
               <th>Producto</th>
               <th>Precio</th>
               <th>Descripción</th>
+              <th>Disponibilidad</th>
             </tr>
           </thead>
           <tbody>
@@ -131,7 +143,8 @@
                 <td> <%= products[i].idproduct %></td>
                 <td> <%= products[i].name %></td>
                 <td> $<%= products[i].price %></td>
-                <td> <%= products[i].description %></td>               
+                <td> <%= products[i].description %></td>  
+                <td> <%= products[i].availability %> </td>             
               </tr>
             <% } %>
           </tbody>

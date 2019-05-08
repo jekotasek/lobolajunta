@@ -2,8 +2,10 @@ const dbConnection = require('../../config/dbConnection');
 
 let mailer = require('../js/mailer');
 
-let sqlupdate = 'UPDATE products SET status = ? WHERE id_products = ?';
-let sqldelete = 'DELETE FROM products WHERE id_products = ?';
+let sqlupdate = 'UPDATE products SET status = ? WHERE idproduct = ?';
+let sqldelete = 'DELETE FROM products WHERE idproduct = ?';
+let sqldelete2 = 'DELETE FROM promos WHERE idpromos = ?';
+
 
 module.exports = app => {
   const connection = dbConnection();
@@ -86,6 +88,17 @@ module.exports = app => {
     });
   });
 
+  app.post('/promodelete', (req,res) => {
+    let data = [req.body.id_products];
+    connection.query(sqldelete2, data, (error, results, fields) => {
+      if (error){
+        return console.error(error.message);
+      }
+      console.log('Rows affected:', results.affectedRows, data);
+      res.redirect('/products');
+    });
+  });
+
   app.post('/cleartable', (req,res) => {
     mailer.connect();
     mailer.sendMail();
@@ -93,6 +106,15 @@ module.exports = app => {
     connection.query('DELETE FROM products', (err, result) => {
       res.redirect('/products');
     });
-    
   });
+
+  app.post('/cleartablepromo', (req,res) => {
+    mailer.connect();
+    mailer.sendMail();
+    connection.query('TRUNCATE TABLE promos');
+    connection.query('DELETE FROM promos', (err, result) => {
+      res.redirect('/products');
+    });
+  });
+
 };
