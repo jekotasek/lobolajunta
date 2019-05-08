@@ -2,7 +2,7 @@ const dbConnection = require('../../config/dbConnection');
 
 let mailer = require('../js/mailer');
 
-let sqlupdate = 'UPDATE products SET status = ? WHERE idproduct = ?';
+let sqlupdate = 'UPDATE products SET availability = ? WHERE idproduct = ?';
 let sqldelete = 'DELETE FROM products WHERE idproduct = ?';
 let sqldelete2 = 'DELETE FROM promos WHERE idpromos = ?';
 
@@ -44,11 +44,13 @@ module.exports = app => {
 
   app.post('/products', (req,res) => {
     const { name, price, description} = req.body;
-    
+    let availability = 'Disponible';
+
     connection.query('INSERT INTO products SET?', {
       name,
       price,
-      description
+      description,
+      availability
     }, (err, result) => {
       res.redirect('/products');
     });
@@ -56,7 +58,6 @@ module.exports = app => {
 
   app.post('/promos', (req,res) => {
     const { name, vig, description} = req.body;
-    
     connection.query('INSERT INTO promos SET?', {
       name,
       vig,
@@ -67,7 +68,7 @@ module.exports = app => {
   });
 
   app.post('/productsedit', (req,res) => {
-    let data = [req.body.status, req.body.id_products];
+    let data = [req.body.availability, req.body.id_products];
     connection.query(sqlupdate, data, (error, results, fields) => {
       if (error){
         return console.error(error.message);
